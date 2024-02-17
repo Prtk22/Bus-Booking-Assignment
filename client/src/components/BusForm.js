@@ -22,6 +22,7 @@ function BusForm({
       if (type === "add") {
         response = await axiosInstance(token).post("/api/buses/add-bus", values);
       } else {
+        console.log("type is", type)
         response = await axiosInstance(token).put(
           `/api/buses/${selectedBus._id}`,
           values

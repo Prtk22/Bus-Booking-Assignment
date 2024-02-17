@@ -19,14 +19,10 @@ function Login({ setToken, showLoading, hideLoading }) {
         localStorage.setItem("token", tokenReceived);
         setToken(tokenReceived);
         localStorage.setItem("user_id", response.data.user._id);
-        const idTrip = localStorage.getItem("idTrip");
-        console.log("idTrip is", idTrip);
         if (response.data.user.isAdmin === true) {
           navigate("/admin/buses");
-        } else if (idTrip == null) {
-          navigate("/bookings");
-        } else if (idTrip !== null) {
-          navigate(`/book-now/${idTrip}`);
+        } else {
+          navigate("/bus-booking");
         }
       } else {
         message.error(response.data.message);

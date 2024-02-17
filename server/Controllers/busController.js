@@ -100,27 +100,25 @@ const GetBusesByFromAndTo = async (req, res) => {
 
 // update a bus
 const UpdateBus = async (req, res) => {
-  // if the bus is completed , you can't update it
-  const bus = await Bus.findById(req.params.id);
-  if (bus.status === "Completed") {
-    res.status(400).send({
-      message: "You can't update a completed bus",
-      success: false,
-    });
-  } else {
-    try {
-      await Bus.findByIdAndUpdate(req.params.id, req.body);
-      res.status(200).send({
-        message: "Bus updated successfully",
-        success: true,
-      });
-    } catch (error) {
-      res.status(500).send({
-        message: "Bus not found",
+  try {
+    const bus = await Bus.findById(req.params.id);
+    if (bus.status === "Completed") {
+      return res.status(400).send({
+        message: "You can't update a completed bus",
         success: false,
-        data: error,
       });
     }
+    await Bus.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).send({
+      message: "Bus updated successfully",
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Bus not found",
+      success: false,
+      data: error,
+    });
   }
 };
 

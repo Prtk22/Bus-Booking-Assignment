@@ -8,15 +8,10 @@ import RegisterImg from "../assets/img/register.png"
 function Register({ showLoading, hideLoading}) {
   const navigate = useNavigate();
   const onFinish = async (values) => {
-    // compare password and confirm password
-    if (values.password !== values.confirmPassword) {
-      message.error("Password and Confirm Password must be same");
-      return;
-    }
 
     try {
       showLoading();
-      const response = await axios.post("/api/auth/create-user", values);
+      const response = await axios.post("/api/auth/register", values);
       hideLoading();
       if (response.data.success) {
         message.success(response.data.message);

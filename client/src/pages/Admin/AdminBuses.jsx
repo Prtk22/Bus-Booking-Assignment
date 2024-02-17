@@ -5,10 +5,13 @@ import { axiosInstance } from "../../helpers/axiosInstance";
 import { message, Table } from "antd";
 import { Helmet } from "react-helmet";
 
+const defaultBusState = {
+  status:"Yet to start"
+};
 function AdminBuses({ token, showLoading, hideLoading }) {
   const [showBusForm, setShowBusForm] = useState(false);
   const [buses, setBuses] = useState([]);
-  const [selectedBus, setSelectedBus] = useState(null);
+  const [selectedBus, setSelectedBus] = useState(defaultBusState);
 
   const getBuses = useCallback(async () => {
     try {
@@ -141,7 +144,7 @@ function AdminBuses({ token, showLoading, hideLoading }) {
               token={token}
               showBusForm={showBusForm}
               setShowBusForm={setShowBusForm}
-              type={selectedBus ? "edit" : "add"}
+              type={JSON.stringify(selectedBus)!=JSON.stringify(defaultBusState) ? "edit" : "add"}
               selectedBus={selectedBus}
               setSelectedBus={setSelectedBus}
               getData={getBuses}

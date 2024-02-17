@@ -9,6 +9,7 @@ const {
   CancelBooking,
 } = require("../controllers/bookingController");
 
+
 router.post("/book-seat/:userId", isLoggedIn, BookSeat);
 router.get("/get-all-bookings", isLoggedIn, GetAllBookings);
 router.get("/:user_Id", isLoggedIn, GetAllBookingsByUser);

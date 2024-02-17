@@ -61,7 +61,7 @@ function AdminBookings({ token, showLoading, hideLoading }) {
       render: (departure) => moment(departure, "HH:mm").format("hh:mm A"),
     },
     {
-      title: "Seats",
+      title: "Seat Details",
       dataIndex: "seats",
       render: (seats) => seats.join(", "),
     },

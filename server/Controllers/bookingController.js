@@ -3,37 +3,30 @@ const Bus = require("../models/busModel");
 const User = require("../models/usersModel");
 
 const BookSeat = async (req, res) => {
-  const newBooking = new Booking({
-    ...req.body,
-    user: req.params.userId,
-  });
-  newBooking.save()
-  .then(() => {
-    return User.findById(req.params.userId).exec()
-  })
-  .then(() => {
-    return Bus.findById(req.body.bus);
-  })
-  .then((bus) => {
+  try {
+    const newBooking = new Booking({
+      ...req.body,
+      user: req.params.userId,
+    });
+    await newBooking.save();
+    const user = User.findById(req.params.userId);
+    const bus = await Bus.findById(req.body.bus);
     bus.seatsBooked = [...bus.seatsBooked, ...req.body.seats];
-    return bus.save();
-  })
-  .then(() => {
+    await bus.save();
     res.status(200).send({
       message: "Seat booked successfully",
       data: newBooking,
       user: user._id,
       success: true,
     });
-  })
-  .catch ((error) =>  {
+  } catch (error)  {
     console.log(error);
     res.status(500).send({
       message: "Booking failed",
       data: error,
       success: false,
     });
-  })
+  }
 };
 
 const GetAllBookings = async (req, res) => {
@@ -89,7 +82,7 @@ const CancelBooking = async (req, res) => {
       });
     }
 
-    booking.remove();
+    await Booking.findByIdAndDelete(req.params.booking_id);
     bus.seatsBooked = bus.seatsBooked.filter(
       (seat) => !booking.seats.includes(seat)
     );
@@ -100,6 +93,7 @@ const CancelBooking = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       message: "Booking cancellation failed",
       data: error,
