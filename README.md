@@ -3,11 +3,10 @@
 ### This website will include the following features :
 
 - Separate User Interfaces for Users, Admins.
-- Search available bookings before being authenticated.
 - JWT Authentication and Password Hashing.
 - Seats Availability Checking.
-- Stripe Payment Gateway Integration.
-- Handling negative payment scenarios.
+- Color coding for buses - green for less than 60% occupancy, yellow for 60-90% and red for more than 90%.
+- Manage buses, add and delete them from Admin Panel.
 - Manage Tickets and User from the Admin Panel.
 
 ### The tools and technologies used :
@@ -17,9 +16,7 @@
 - React
 - Node
 - Tailwind
-- Redux
 - Antd
-- Stripe
 
 ## Available Scripts
 
